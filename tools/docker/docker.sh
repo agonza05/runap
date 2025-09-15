@@ -204,6 +204,7 @@ show_post_install_info() {
     print_step "Post-installation information"
 
     print_info "Log file saved to: ${LOG_FILE}"
+    print_info "Install helper saved to: /tmp/${APP_NAME}_install.sh"
     print_info "System information: ${OS} ${OS_CODENAME} (${OS_VERSION}) on ${OS_ARCH} (${OS_ARCH_ALT})"
     echo
     print_success "🎉 ${SCRIPT_NAME} completed successfully!"
