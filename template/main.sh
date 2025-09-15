@@ -157,6 +157,21 @@ check_system_requirements() {
     else
         print_success "Sufficient memory available (${TOTAL_MEM} MB)"
     fi
+
+    print_step "Checking packages requirements"
+	# Ideally we want to use curl, but on some installs we
+	# only have wget. Detect and use what's available.
+	CURL=
+	if type curl >/dev/null; then
+		CURL="curl -fsSL"
+	elif type wget >/dev/null; then
+		CURL="wget -q -O-"
+	fi
+	if [ -z "$CURL" ]; then
+		echo "The installer needs either curl or wget to download files."
+		echo "Please install either curl or wget to proceed."
+		exit 1
+	fi
 }
 
 # Function to update system packages
@@ -179,7 +194,6 @@ run_install_script() {
     print_info "Installing from: ${BASE_URL}"
     print_info "Script located at: ${SCRIPT_PATH}"
     log_command whoami
-    log_command curl -LsSf https://astral.sh/uv/install.sh | sh
 
     print_success "Docker installed successfully"
 }
